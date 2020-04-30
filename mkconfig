@@ -1,0 +1,36 @@
+CC = tcc
+LD = $CC
+ROOT = /usr/local
+
+NAME = xtrm
+
+USR = /usr
+USRINC = $USR/include
+USRLIB = $USR/lib
+
+X11 = $USR/X11R6
+X11INC = $X11/include
+X11LIB = $X11/lib
+
+PKG_CONFIG = pkg-config
+
+FREETYPEINC = $USRINC/freetype2
+
+# OpenBSD:(Just copied from "config.mk")
+#CPPFLAGS = -DVERSION=\"$(VERSION)\" -D_XOPEN_SOURCE=600 -D_BSD_SOURCE
+#LIBS = -L$(X11LIB) -lm -lX11 -lutil -lXft \
+#       `pkg-config --libs fontconfig` \
+#       `pkg-config --libs freetype2`
+
+ADDCPPFLAGS = $ADDCPPFLAGS
+
+ADDCFLAGS =
+#ADDCFLAGS = $ADDCFLAGS -O3 -static -std=c99
+#ADDCFLAGS = $ADDCFLAGS -Os -pedantic -std=c99 -Wall
+
+LIB = -L$X11LIB -lm -lX11 -lutil -lXft \
+	`{$PKG_CONFIG --libs fontconfig} \
+	`{$PKG_CONFIG --libs freetype2}
+INC = -I$X11INC \
+	`{$PKG_CONFIG --cflags fontconfig} \
+	`{$PKG_CONFIG --cflags freetype2} 
